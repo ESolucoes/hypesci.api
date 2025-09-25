@@ -5,10 +5,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 let handler: any;
-
 async function bootstrap() {
   const { AppModule } = require('../dist/app.module');
-
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.use(helmet());
@@ -16,8 +14,7 @@ async function bootstrap() {
   await app.init();
   return serverless(app.getHttpAdapter().getInstance());
 }
-
-export default async function (req: any, res: any) {
+export default async (req: any, res: any) => {
   if (!handler) handler = await bootstrap();
   return handler(req, res);
-}
+};
