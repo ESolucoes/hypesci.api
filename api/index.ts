@@ -1,19 +1,19 @@
 import 'reflect-metadata';
 import serverless from 'serverless-http';
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../src/app.module';
 import helmet from 'helmet';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 
 let handler: any;
 
 async function bootstrap() {
+  const { AppModule } = require('../dist/app.module');
+
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
   await app.init();
-  // @ts-ignore
   return serverless(app.getHttpAdapter().getInstance());
 }
 
