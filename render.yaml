@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: translate-api
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: node dist/main.js
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: DEFAULT_SOURCE
+        value: auto
+      - key: DEFAULT_TARGET
+        value: pt
+      - key: MYMEMORY_EMAIL
+        value: ""   # opcional, pode colocar seu e-mail pra aumentar limite no MyMemory
